@@ -1,0 +1,35 @@
+# base folder of the design
+export FOLDER = lfsr
+
+# toplevel module
+export TOP = lfsr
+
+# testbench in $(FOLDER)/sim, creates trace.vcd
+export TB = tb.v
+
+# standard cell library timing
+export LIB = $(HOME)/skywater-pdk/libraries/sky130_fd_sc_hd/latest/timing/sky130_fd_sc_hd__tt_025C_1v80.lib
+
+# simulation view of cells
+export CELLS = $(HOME)/skywater-pdk/libraries/sky130_fd_sc_hd/latest/cells
+
+# clock period in ns
+export CLOCK = 5
+
+# name of the clock net
+export CLOCKNAME = clk
+
+# input delay constraint, normally 0
+export INPUTDELAY = 0
+
+# output delay constraint, normally 0
+export OUTPUTDELAY = 0
+
+# synthesis script for logic optimization
+export ABC = abc.area
+
+# chip configuration
+export CHIPCONFIG = config.mk
+
+# don't touch
+include scripts/make.design

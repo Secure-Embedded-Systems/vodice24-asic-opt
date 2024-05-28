@@ -1,0 +1,244 @@
+#include "poly1305.h"
+#include <stdio.h>
+#include <stdlib.h>
+
+#define LOAD32LE(p) (						\
+		      ((uint32_t)(((uint8_t *)(p))[0]) << 0)  |	\
+		      ((uint32_t)(((uint8_t *)(p))[1]) << 8)  |	\
+		      ((uint32_t)(((uint8_t *)(p))[2]) << 16) |	\
+		      ((uint32_t)(((uint8_t *)(p))[3]) << 24))
+
+void printbit(uint8_t v) {
+  if (v)
+    printf("1");
+  else
+    printf("0");
+}
+
+void printbytes32(uint32_t n) {
+  printf("%x", n & 0xff);
+  printf("%x", (n >> 8) & 0xff);
+  printf("%x", (n >> 16) & 0xff);
+  printf("%x", (n >> 24) & 0xff);
+}
+
+void printbytestring32(uint32_t *n, uint32_t l) {
+  uint32_t i;
+  for (i=0; i<l; i++) 
+    printbytes32(n[i]);
+}
+
+void printbits32(uint32_t n) {
+  uint32_t k = 0x80000000;
+  while (k) {
+    if (n & k)
+      printf("1");
+    else
+      printf("0");
+    k = k >> 1;
+  }
+}
+
+void printbitstring32(uint32_t *n, uint32_t l) {
+  uint32_t i;
+  for (i=0; i<l; i++) 
+    printbits32(n[i]);
+}
+
+void printbytes8(uint8_t n) {
+  printf("%02x", n & 0xff);
+}
+
+void printbytestring8(uint8_t *n, uint32_t l) {
+  uint32_t i;
+  for (i=0; i<l; i++) 
+    printbytes8(n[i]);
+}
+
+void printbits8(uint8_t n) {
+  uint8_t k = 0x80;
+  while (k) {
+    if (n & k)
+      printf("1");
+    else
+      printf("0");
+    k = k >> 1;
+  }
+}
+
+void printbitstring8(uint8_t *n, uint32_t l) {
+  uint32_t i;
+  for (i=0; i<l; i++) 
+    printbits8(n[i]);
+}
+
+void randbytes(uint8_t *n, uint32_t l) {
+  uint32_t i;
+  for (i=0; i<l; i++) {
+    n[i] = rand();
+  }
+}
+
+void processmac(uint8_t *m, uint32_t l, uint8_t *key, uint8_t *tag) {
+  Poly1305Context c;
+  poly1305Init  (&c, key );
+  poly1305Update(&c, m, l);
+  poly1305Final (&c, tag );
+}
+
+void testvectors(uint8_t *m, uint32_t l, uint8_t *key, uint8_t *tag) {
+  uint8_t  first = 1;
+  uint8_t  full  = 1;
+  uint8_t  last  = 1;
+  uint8_t  block[16];
+  uint32_t p = 0;
+  uint32_t i = 0;
+  
+  while (l > 0) {
+    
+    if (l > 16) {
+      full = 1;
+      for (i=0; i<16; i++)
+	block[i] = m[p+i];
+      l -= 16;
+      p += 16;
+    } else {
+      full = 0;
+      for (i=0; i<l; i++)
+	block[i] = m[p+i];
+      l = 0;
+      block[i++] = 0x01;
+      while (i<16)
+	block[i++] = 0;
+    }
+
+    if (l == 0)
+      last = 1;
+    else
+      last = 0;
+    
+    printbit(first);
+    first = 0;
+    
+    printbit(last);
+
+    printbit(full);
+
+    printbitstring8(block, 16);
+    printbitstring8(key, 32);
+    printbitstring8(tag, 16);
+    printf("\n");
+  }
+
+}
+
+
+void printio(uint8_t *key, uint8_t *m, uint32_t l, uint8_t *tag) {
+
+  printf("key "); 
+  printbytestring8(key, 32);
+  printf("\n");
+
+  printf("msg "); 
+  printbytestring8(m, l);
+  printf("\n");
+
+  printf("tag "); 
+  printbytestring8(tag, 16);
+  printf("\n");
+
+}
+
+
+void main(int argc, char **argv) {
+  uint8_t key0[32] = {
+    0x0,0x0,0x0,0x0, 0x0,0x0,0x0,0x0, 0x0,0x0,0x0,0x0, 0x0,0x0,0x0,0x0,
+    0x0,0x0,0x0,0x0, 0x0,0x0,0x0,0x0, 0x0,0x0,0x0,0x0, 0x0,0x0,0x0,0x0};
+  uint8_t m0[64]   = {
+    0x0,0x0,0x0,0x0, 0x0,0x0,0x0,0x0, 0x0,0x0,0x0,0x0, 0x0,0x0,0x0,0x0,
+    0x0,0x0,0x0,0x0, 0x0,0x0,0x0,0x0, 0x0,0x0,0x0,0x0, 0x0,0x0,0x0,0x0,
+    0x0,0x0,0x0,0x0, 0x0,0x0,0x0,0x0, 0x0,0x0,0x0,0x0, 0x0,0x0,0x0,0x0,
+    0x0,0x0,0x0,0x0, 0x0,0x0,0x0,0x0, 0x0,0x0,0x0,0x0, 0x0,0x0,0x0,0x0};
+  uint8_t  tag0[16];
+
+  processmac (m0, 64, key0, tag0);
+
+  if (argc == 1)
+    testvectors( m0, 64, key0, tag0);
+  else {
+    printf("MAC0\n");
+    printio(key0, m0, 64, tag0);
+  }
+
+  //--------------------------------------------------------------------------
+  uint8_t key1[32] = {0x85,0xd6,0xbe,0x78,0x57,0x55,0x6d,0x33,0x7f,0x44,0x52,0xfe,0x42,0xd5,0x06,0xa8,
+  		      0x01,0x03,0x80,0x8a,0xfb,0x0d,0xb2,0xfd,0x4a,0xbf,0xf6,0xaf,0x41,0x49,0xf5,0x1b};
+  char    *msg1 = "Cryptographic Forum Research Group";
+  uint8_t *m1 = (uint8_t *) msg1;
+  uint8_t  tag1[16];
+
+  processmac (m1, 34, key1, tag1);
+
+  if (argc == 1)
+    testvectors( m1, 34, key1, tag1);
+  else {
+    printf("MAC1\n");
+    printio(key1, m1, 34, tag1);
+  }
+  
+  //--------------------------------------------------------------------------
+  uint8_t key2[32] = {0x00,0x00,0x00,0x00, 0x00,0x00,0x00,0x00, 0x00,0x00,0x00,0x00, 0x00,0x00,0x00,0x00,
+		      0x36,0xe5,0xf6, 0xb5,0xc5,0xe0,0x60, 0x70,0xf0,0xef,0xca, 0x96,0x22,0x7a,0x86,0x3e};
+  char *msg2 = "Any submission to the IETF intended by the Contributor for publication as all or part of an IETF Internet-Draft or RFC and any statement made within the context of an IETF activity is considered an \"IETF Contribution\". Such statements include oral statements in IETF sessions, as well as written and electronic communications made at any time or place, which are addressed to";
+  uint8_t *m2 = (uint8_t *) msg2;
+  uint8_t tag2[16];
+  
+  processmac (m2, 375, key2, tag2);
+
+  if (argc == 1) 
+    testvectors( m2, 376, key2, tag2);
+  else {
+    printf("MAC2\n");
+    printio(key2, m2, 375, tag2);
+  }
+  
+  //--------------------------------------------------------------------------
+  uint8_t key3[32] = {0x36,0xe5,0xf6, 0xb5,0xc5,0xe0,0x60, 0x70,0xf0,0xef,0xca, 0x96,0x22,0x7a,0x86,0x3e,
+  		      0x00,0x00,0x00,0x00, 0x00,0x00,0x00,0x00, 0x00,0x00,0x00,0x00, 0x00,0x00,0x00,0x00};
+
+  char *msg3 = "Any submission to the IETF intended by the Contributor for publication as all or part of an IETF Internet-Draft or RFC and any statement made within the context of an IETF activity is considered an \"IETF Contribution\". Such statements include oral statements in IETF sessions, as well as written and electronic communications made at any time or place, which are addressed to";
+  uint8_t *m3 = (uint8_t *) msg3;
+  uint8_t tag3[16];
+  
+  processmac (m3, 375, key3, tag3);
+
+  if (argc == 1) 
+    testvectors( m3, 375, key3, tag3);
+  else {
+    printf("MAC3\n");
+    printio(key3, m3, 375, tag3);
+  }
+  
+  //--------------------------------------------------------------------------
+  uint8_t key4[32] = {0x1c, 0x92, 0x40, 0xa5, 0xeb, 0x55, 0xd3, 0x8a, 0xf3, 0x33, 0x88, 0x86, 0x04, 0xf6, 0xb5, 0xf0,
+		      0x47, 0x39, 0x17, 0xc1, 0x40, 0x2b, 0x80, 0x09, 0x9d, 0xca, 0x5c, 0xbc, 0x20, 0x70, 0x75, 0xc0};
+  uint8_t m4[127] = {0x27, 0x54, 0x77, 0x61, 0x73, 0x20, 0x62, 0x72, 0x69, 0x6c, 0x6c, 0x69, 0x67, 0x2c, 0x20, 0x61, 
+		     0x6e, 0x64, 0x20, 0x74, 0x68, 0x65, 0x20, 0x73, 0x6c, 0x69, 0x74, 0x68, 0x79, 0x20, 0x74, 0x6f, 
+		     0x76, 0x65, 0x73, 0x0a, 0x44, 0x69, 0x64, 0x20, 0x67, 0x79, 0x72, 0x65, 0x20, 0x61, 0x6e, 0x64, 
+		     0x20, 0x67, 0x69, 0x6d, 0x62, 0x6c, 0x65, 0x20, 0x69, 0x6e, 0x20, 0x74, 0x68, 0x65, 0x20, 0x77, 
+		     0x61, 0x62, 0x65, 0x3a, 0x0a, 0x41, 0x6c, 0x6c, 0x20, 0x6d, 0x69, 0x6d, 0x73, 0x79, 0x20, 0x77, 
+		     0x65, 0x72, 0x65, 0x20, 0x74, 0x68, 0x65, 0x20, 0x62, 0x6f, 0x72, 0x6f, 0x67, 0x6f, 0x76, 0x65, 
+		     0x73, 0x2c, 0x0a, 0x41, 0x6e, 0x64, 0x20, 0x74, 0x68, 0x65, 0x20, 0x6d, 0x6f, 0x6d, 0x65, 0x20, 
+		     0x72, 0x61, 0x74, 0x68, 0x73, 0x20, 0x6f, 0x75, 0x74, 0x67, 0x72, 0x61, 0x62, 0x65, 0x2e};
+  uint8_t tag4[16];
+  
+  processmac (m4, 127, key4, tag4);
+
+  if (argc)
+    testvectors( m4, 127, key4, tag4);
+  else {
+    printf("MAC4\n");
+    printio(key4, m4, 127, tag4);
+  }
+  
+}

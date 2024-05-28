@@ -1,0 +1,62 @@
+all:
+	@echo "Targets are:"
+	@echo "   rtlsim       RTL simulation"
+	@echo "   synthesis    logic synthesis"
+	@echo "   glschematic  creates a gate level schematic"
+	@echo "   glsim        gate level simulation"
+	@echo "   gltiming     static timing analysis"
+	@echo "   openroad     Start OpenROAD docker container"
+	@echo "   chip         OpenROAD chip synthesis"
+	@echo "   chipgui      OpenROAD GUI"
+	@echo "   chipdata     Extract OpenROAD design data to work dir"
+	@echo "   chipclean    Remove intermediate results from OpenROAD work area"
+	@echo "   clean        Remove intermediate results from work dir"
+	@echo "   distclean    Global clean"
+
+export FOLDER ?= .
+export CHIPTOP ?= $(TOP)
+
+$(FOLDER)/work/makefile: scripts/gen_make_design.py
+	test -d $(FOLDER)/work || mkdir -p $(FOLDER)/work
+	python3 scripts/gen_make_design.py
+
+rtlsim: $(FOLDER)/work/makefile
+	cd $(FOLDER)/work && make rtlsim
+
+synthesis: $(FOLDER)/work/makefile
+	cd $(FOLDER)/work && make synthesis
+
+glschematic: $(FOLDER)/work/makefile
+	cd $(FOLDER)/work && make glschematic
+
+glsim: $(FOLDER)/work/makefile
+	cd $(FOLDER)/work && make glsim
+
+gltiming: $(FOLDER)/work/makefile
+	cd $(FOLDER)/work && make gltiming
+
+openroad: $(FOLDER)/work/makefile
+	cd $(FOLDER)/work && make openroad
+
+clean: 
+	rm -rf $(FOLDER)/work
+
+chip: 
+ifeq ($(wildcard /OpenROAD-flow-scripts/.),)
+	$(error Run make openroad before make chip.)
+endif
+	cd $(FOLDER)/work && make chip
+
+chipdata: 
+	cd $(FOLDER)/work && make chipdata
+
+chipgui: 
+	cd $(FOLDER)/work && make chipgui
+
+chipclean:
+	cd $(FOLDER)/work && make chipclean
+
+distclean: Makefile.*
+	@for file in $^; do \
+		(test -d $${file##*.}/work && rm -rf  $${file##*.}/work) || true; \
+	done

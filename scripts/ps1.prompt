@@ -1,0 +1,2 @@
+export PS1="\[\033[1;32m\]\$PWD:\[\033[33m\]openroad\[\033[0;37m\]> "
+set bell-style none
