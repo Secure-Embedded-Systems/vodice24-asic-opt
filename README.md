@@ -59,10 +59,34 @@ in hardware.
 
 ## Useful Commands (using LFSR as design target)
 
-| Design Target |   - RTL code: ``lfsr/rtl/lfsr.v`` |
-|               |   - Testbench: ``lfsr/sim/tb.v``  |
-|               |   - Design parameters: ``Makefile.lfsr`` |
-|               |  - Chip are constraint: ``lfsr/chip/config.mk`` |
+### Design Target
+
+- RTL code: ``lfsr/rtl/lfsr.v`` 
+- Testbench: ``lfsr/sim/tb.v``  
+- Design parameters: ``Makefile.lfsr`` 
+- Chip are constraint: ``lfsr/chip/config.mk`` 
+
+### RTL Simulation
+
+    make -f Makefile.lfsr rtlsim
+
+### Logic Synthesis
+
+    make -f Makefile.lfsr synthesis
+
+### Timing Analysis
+
+    make -f Makefile.lfsr gltiming
+
+### Gate-level Simulation
+
+    make -f Makefile.lfsr glsim
+
+### Chip Layout
+
+    make -f Makefile.lfsr openroad
+    make -f Makefile.lfsr chip
+
 
 
   
