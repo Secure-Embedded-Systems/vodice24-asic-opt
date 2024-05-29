@@ -40,6 +40,19 @@ in hardware.
 | 11:00 | Poly1305 in Hardware   | Multiplexing, microcoding       |
 | 11:30 | Hands-on               |                                 |
 
+## Design Index
+
+| Design     | Purpose                                                |
+|------------|--------------------------------------------------------|
+| lfsr       | 4-bit LFSR to demonstrate basic flow steps             |
+| modmul_bp  | Bit-parallel mod-29 multiplier                         |
+| modmul_bp_pipe | Bit-parallel mod-29 pipelined multiplier           |
+| modmul_bs  | Bit-serial mod-29 multiplier                           |
+| poly1305_bp | Bit-parallel Poly1305 MAC                             |
+| poly1305_ws | Word-serial Poly1305 MAC                              |
+| poly1305_ws_w32 | Word-serial Poly1305 MAC with mux'ed multiplier   |
+| poly1305_tv | Poly1305 test vector generator                        |
+
 ## Slide Material
 
 [PDF slides](https://schaumont.dyn.wpi.edu/schaum/summerschool-crypto-asic-opt-prs.pdf)
