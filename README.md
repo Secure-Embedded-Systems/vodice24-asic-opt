@@ -59,8 +59,13 @@ in hardware.
 
 ## Useful Commands (using LFSR as design target)
 
-- RTL code: ``lfsr/rtl/lfsr.v``
+| Design Target |   - RTL code: ``lfsr/rtl/lfsr.v`` |
+|               |   - Testbench: ``lfsr/sim/tb.v``  |
+|               |   - Design parameters: ``Makefile.lfsr`` |
+|               |  - Chip are constraint: ``lfsr/chip/config.mk`` |
 
+
+  
 
 ## Design Server IPs
 
