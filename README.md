@@ -18,9 +18,7 @@ innovation are simply too big to ignore the hardware design domain.
 
 | Time  |  Topic                 |
 |-------|------------------------|
-| 9:00  | OpenROAD Design Flow <br>  |
-|       | Example  <br>              |
-|       | Modular Multiplication |
+| 9:00  | OpenROAD Design Flow; Example; Modular Multiplication  |
 | 10:00 | Hands-on               |
 | 10:30 | Break                  |
 
