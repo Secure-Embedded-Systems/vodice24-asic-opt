@@ -18,9 +18,11 @@ innovation are simply too big to ignore the hardware design domain.
 
 | Time  |  Topic                 |
 |-------|------------------------|
-| 9:00  | OpenROAD Design Flow; Example; Modular Multiplication  |
+| 9:00  | OpenROAD Design Flow   |
 | 10:00 | Hands-on               |
 | 10:30 | Break                  |
+| 11:00 | Poly1305 in Hardware   |
+| 11:30 | Hands-on               |
 
 ## Slide Material
 
