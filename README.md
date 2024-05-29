@@ -57,6 +57,11 @@ in hardware.
 | poly1305_ws_w32 | Word-serial Poly1305 MAC with mux'ed multiplier   |
 | poly1305_tv | Poly1305 test vector generator                        |
 
+## Useful Commands (using LFSR as design target)
+
+- RTL code: ``lfsr/rtl/lfsr.v``
+
+
 ## Design Server IPs
 
 | Server | IP              |
