@@ -16,6 +16,14 @@ exists for a culture of hardware engineering in the cryptographic community. The
 potential gains of cryptographic implementations in efficiency, in scope, and in 
 innovation are simply too big to ignore the hardware design domain.
 
+| Time  |  Topic                 |
+|-------|------------------------|
+| 9:00  | OpenROAD Design Flow   |
+|       | Example                |
+|       | Modular Multiplication |
+| 10:00 | Hands-on               |
+| 10:30 | Break                  |
+
 ## Slide Material
 
 [PDF slides](https://schaumont.dyn.wpi.edu/schaum/summerschool-crypto-asic-opt-prs.pdf)
