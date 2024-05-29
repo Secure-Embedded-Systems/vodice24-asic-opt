@@ -19,3 +19,11 @@ innovation are simply too big to ignore the hardware design domain.
 ## Slide Material
 
 [PDF slides](https://schaumont.dyn.wpi.edu/schaum/summerschool-crypto-asic-opt-prs.pdf)
+
+## Design Server IPs
+
+| Server | IP              |
+|--------|-----------------|
+| asic01 | 123.123.123.123 |
+|--------|-----------------|
+| asic02 | 123.123.123.123 |
