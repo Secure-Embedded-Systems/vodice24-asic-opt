@@ -16,6 +16,22 @@ exists for a culture of hardware engineering in the cryptographic community. The
 potential gains of cryptographic implementations in efficiency, in scope, and in 
 innovation are simply too big to ignore the hardware design domain.
 
+The objective of this tutorial is to introduce a standard open-source ASIC design 
+flow using cryptographic hardware design examples. Tutorial attendees will learn 
+specifically about techniques for high performance, and techniques for low area. 
+In each case, attendees will target the OpenROAD ASIC design flow for Google 
+Skywater 130nm standard cells.
+
+In this design process, the attendees will learn how to analyze the tool output, 
+and how to make meaningful design decisions towards high performance or low area 
+in hardware.
+
+1/ Transform a C reference implementation to RTL hardware, without the magic of a compiler or a high-level synthesis tool.
+2/ Understand common RTL design transformations for high performance in hardware: pipelining, unfolding, and retiming
+3/ Understand common RTL design transformations for low area in hardware: multiplexing and bitserial design.
+
+## Schedule
+
 | Time  |  Topic                 |
 |-------|------------------------|
 | 9:00  | OpenROAD Design Flow   |
