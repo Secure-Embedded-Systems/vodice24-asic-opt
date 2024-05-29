@@ -18,4 +18,4 @@ innovation are simply too big to ignore the hardware design domain.
 
 ## Slide Material
 
-(PDF slides)[https://schaumont.dyn.wpi.edu/schaum/summerschool-crypto-asic-opt-prs.pdf]
+[PDF slides](https://schaumont.dyn.wpi.edu/schaum/summerschool-crypto-asic-opt-prs.pdf)
