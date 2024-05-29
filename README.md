@@ -1,5 +1,7 @@
 # Cryptographic Hardware Optimization for ASIC
 
+## About
+
 Cryptographic hardware are specialized computation structures dedicated to the 
 execution of a single or a few cryptographic algorithms. Through specialization, 
 hardware achieves higher performance, lower power consumption, and lower silicon 
