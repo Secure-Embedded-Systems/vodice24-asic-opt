@@ -70,26 +70,45 @@ in hardware.
 
     make -f Makefile.lfsr rtlsim
 
+- output appears in console
+- waveform (vcd) can be inspected with ``gtkwave lfsr/work/rtl.vcd``
+
 ### Logic Synthesis
 
     make -f Makefile.lfsr synthesis
+
+- output appears in console
+- netlist can be inspected in editor as ``lfsr/work/netlist.v``
+
+### Schematic Creation
+
+    make -f Makefile.lfsr schematic
+
+- Not recommended because of poor scalability
+- Schematic appears as ``lfsr/work/netlist.svg``
 
 ### Timing Analysis
 
     make -f Makefile.lfsr gltiming
 
+- output appears in console
+
 ### Gate-level Simulation
 
     make -f Makefile.lfsr glsim
+
+- output appears in console
+- waveform (vcd) can be inspected with ``gtkwave lfsr/work/netlist.vcd``
 
 ### Chip Layout
 
     make -f Makefile.lfsr openroad
     make -f Makefile.lfsr chip
 
+- inspect chip layout with ``make -f Makefile.lfsr chipgui``
+- copy chip data out of docker using ``make -f Makefile.lfsr chipdata``
+- inspect chip data outside of docker in ``lfsr/work/reports``
 
-
-  
 
 ## Design Server IPs
 
