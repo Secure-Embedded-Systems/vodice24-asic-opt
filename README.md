@@ -30,6 +30,10 @@ in hardware.
 2. Understand common RTL design transformations for high performance in hardware: pipelining, unfolding, and retiming
 3. Understand common RTL design transformations for low area in hardware: multiplexing and bitserial design.
 
+## Slide Material
+
+[PDF slides](https://schaumont.dyn.wpi.edu/schaum/summerschool-crypto-asic-opt-prs.pdf)
+
 ## Schedule
 
 | Time  |  Topic                 |  Transformations                |
@@ -52,10 +56,6 @@ in hardware.
 | poly1305_ws | Word-serial Poly1305 MAC                              |
 | poly1305_ws_w32 | Word-serial Poly1305 MAC with mux'ed multiplier   |
 | poly1305_tv | Poly1305 test vector generator                        |
-
-## Slide Material
-
-[PDF slides](https://schaumont.dyn.wpi.edu/schaum/summerschool-crypto-asic-opt-prs.pdf)
 
 ## Design Server IPs
 
