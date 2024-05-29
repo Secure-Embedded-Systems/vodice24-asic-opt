@@ -26,9 +26,9 @@ In this design process, the attendees will learn how to analyze the tool output,
 and how to make meaningful design decisions towards high performance or low area 
 in hardware.
 
-1/ Transform a C reference implementation to RTL hardware, without the magic of a compiler or a high-level synthesis tool.
-2/ Understand common RTL design transformations for high performance in hardware: pipelining, unfolding, and retiming
-3/ Understand common RTL design transformations for low area in hardware: multiplexing and bitserial design.
+    1/ Transform a C reference implementation to RTL hardware, without the magic of a compiler or a high-level synthesis tool.
+    2/ Understand common RTL design transformations for high performance in hardware: pipelining, unfolding, and retiming
+    3/ Understand common RTL design transformations for low area in hardware: multiplexing and bitserial design.
 
 ## Schedule
 
