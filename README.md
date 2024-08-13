@@ -30,20 +30,6 @@ in hardware.
 2. Understand common RTL design transformations for high performance in hardware: pipelining, unfolding, and retiming
 3. Understand common RTL design transformations for low area in hardware: multiplexing and bitserial design.
 
-## Slide Material
-
-[PDF slides](https://schaumont.dyn.wpi.edu/schaum/summerschool-crypto-asic-opt-prs.pdf)
-
-## Schedule
-
-| Time  |  Topic                 |  Transformations                |
-|-------|------------------------|---------------------------------|
-| 9:00  | OpenROAD Design Flow   | Pipelining, bitserial design    |
-| 10:00 | Hands-on               |                                 |
-| 10:30 | Break                  |                                 |
-| 11:00 | Poly1305 in Hardware   | Multiplexing, microcoding       |
-| 11:30 | Hands-on               |                                 |
-
 ## Design Index
 
 | Design     | Purpose                                                |
